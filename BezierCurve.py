@@ -5,7 +5,9 @@ import csv
 
 
 class BezierClass(object):
-    """docstring for bezier"""
+    """docstring for BezierClass
+    this class making bezier curve.
+    """
     def __init__(self,points=0):
         self.points = points
     def comb(self, n, k):
@@ -23,6 +25,12 @@ class BezierClass(object):
             p += self.bernstein(n, i, t) * q[i]
         return p
     def bezier_making(self, anchors, dim):
+        """docstring for bezier_making()
+        this function is main of BezierClass.
+
+        return bezier
+        bezier := array[[x1,y1],[x2,y2],...] of bezier curve
+        """
         bezier_curve = []
         for t in np.linspace(0, 1, self.points):
             bezier_curve.append(self.bezier(dim,t,anchors))

@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 (x) = sym.symbols('x')
 
 class SmoothAccelerationClass(object):
-    """docstring forSmoothAccelerationClass
+    """docstring for SmoothAccelerationClass
     This class can make smooth acceleration file.
 
     def design() is main of this class.
@@ -37,25 +37,45 @@ class SmoothAccelerationClass(object):
         self.vel2 = 0.0
         self.vel3 = 0.0
     def design(self):
+        """docstring for design()
+        this function is main of SmoothAccelerationClass.
+
+        return arrayAcc, arrayVel, arrayLoc
+        arrayAcc := array of accel(time)
+        arrayVel := array of velosity(time)
+        arrayLoc := array of location(time)
+        """
         curve_len = self.curve_length(self.x, self.y)
-        self.time_designer(curve_len)
+        self._time_designer(curve_len)
         print(self.t1, self.t2, self.t3)
         arrayTime = np.arange(self.time_start, self.time_start +self.t, self.dt)
         arrayAcc = []
         arrayVel = []
         arrayLoc = []
         for ts in arrayTime:
-            arrayAcc.append(self.acc(ts, self.a))
-            arrayVel.append(self.vel(ts))
-            arrayLoc.append(self.loc(ts))
+            arrayAcc.append(self._acc(ts, self.a))
+            arrayVel.append(self._vel(ts))
+            arrayLoc.append(self._loc(ts))
         plt.plot(arrayTime, arrayAcc, marker=".", color="tomato")
         plt.plot(arrayTime, arrayVel, marker=".", color="skyblue")
         plt.plot(arrayTime, arrayLoc, marker=".", color="g")
         plt.show()
         return arrayAcc, arrayVel, arrayLoc
-    def get_end_time(self):
+    def curve_length(self, x, y):
+        curve_length = 0
+        for index in range(len(x)-1):
+            if (index - 1) <= 0:
+                dx = 0.0
+                dy = 0.0
+            else:
+                dx = x[index] - x[index - 1]
+                dy = y[index] - y[index - 1]
+            ds = np.sqrt(dx**2 + dy**2)
+            curve_length += ds
+        return curve_length
+    def _get_end_time(self):
         return self.t
-    def acc(self,ts, a):
+    def _acc(self,ts, a):
         if 0.0 <= ts and ts <= self.t1:
             return self.a[0]
         elif self.t1< ts and ts <= self.t2:
@@ -64,7 +84,7 @@ class SmoothAccelerationClass(object):
             return self.a[2]
         else:
             pass
-    def vel(self,ts):
+    def _vel(self,ts):
         if 0.0 <= ts and ts <= self.t1:
             # return sym.integrate(self.acc(ts,self.a),(x, 0, ts))
             self.vel1 = self.a[0]*ts +self.vel_start
@@ -79,7 +99,7 @@ class SmoothAccelerationClass(object):
             return self.vel3
         else:
             pass
-    def loc(self,ts):
+    def _loc(self,ts):
         if 0.0 <= ts and ts <= self.t1:
             self.loc1 = (self.a[0]*ts**2)/2.0 +self.vel_start*ts +self.xs
             return self.loc1
@@ -96,7 +116,7 @@ class SmoothAccelerationClass(object):
             # return sym.integrate(sym.integrate(self.acc(ts,self.a),x)+sym.integrate(self.acc(ts,self.a),x)+self.loc1,(x, 0, ts-self.t2)) +self.loc2
         else:
             pass
-    def time_designer(self,curve_length):
+    def _time_designer(self,curve_length):
         self.t1 = (self.vel_want - self.vel_start)/self.a[0]
         self.t3 = abs((self.vel_want - self.vel_end)/self.a[2])
         l = curve_length
@@ -110,15 +130,3 @@ class SmoothAccelerationClass(object):
             #print pycolor.RED + "T2 error" +pycolor.END
             print("\n")
             print("t2 error := {}".format(self.t2))
-    def curve_length(self, x, y):
-        curve_length = 0
-        for index in range(len(x)-1):
-            if (index - 1) <= 0:
-                dx = 0.0
-                dy = 0.0
-            else:
-                dx = x[index] - x[index - 1]
-                dy = y[index] - y[index - 1]
-            ds = np.sqrt(dx**2 + dy**2)
-            curve_length += ds
-        return curve_length

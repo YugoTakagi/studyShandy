@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
 class IntegrateNumberClass(object):
-    """docstring for arrange_the_point
+    """docstring for IntegrateNumberClass
     This class can integrate number of points.
     """
     def __init__(self, X, smoothLocAraay, x_start):
@@ -16,6 +16,12 @@ class IntegrateNumberClass(object):
         self.xs  = x_start
         self.slarray = smoothLocAraay
     def integrate(self):
+        """docstring for def integrate_number
+        this function is integrate number of points.
+        and this is main of IntegrateNumberClass.
+
+        return the index of points that you would get, len(the index)
+        """
         #print('----------start integrate number-----------')
         ARRANGE_INDEXS = []
         sum_s = 0.0

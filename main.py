@@ -3,7 +3,7 @@ from smoothAcceleration import SmoothAccelerationClass
 from integrate_number import IntegrateNumberClass
 import numpy as np
 
-def main():
+def main():#main function
     #####__making curve__#######################################################
     bc = BezierClass(points = 1000)
     BEZIER_ANCER = np.array([[0,0],[0.0,1.4],[-1.43,0.1],[-1.43,1.5]], dtype=np.float)
@@ -12,9 +12,9 @@ def main():
 
 
     #####__making smooth accel__################################################
-    # def __init__(self, a(array), vel_want, vel_start, vel_end, curve, x_start, time_start)
     a = [2.0,0,-2.0]
     x_start = 0.0
+    # def __init__(self, a(array), vel_want, vel_start, vel_end, curve, x_start, time_start)
     sacc = SmoothAccelerationClass(a,1.3,0.0,0.0,BEZIER,x_start,0.0)
     arrayAcc, arrayVel, arrayLoc = sacc.design()
     ############################################################################
@@ -28,4 +28,4 @@ def main():
     ############################################################################
 
 if __name__ == '__main__':
-    main()
+    main()#run main function.
